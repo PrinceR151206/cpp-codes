@@ -1,66 +1,100 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
 class BankAccount {
 private:
-    std::string accountHolderName;
-    std::string accountNumber;
+    string accountHolder;
+    string accountNumber;
     double balance;
 
 public:
-    // Constructor
-    BankAccount(const std::string& name, const std::string& accNumber, double initialBalance = 0.0) {
-        accountHolderName = name;
-        accountNumber = accNumber;
+    // Constructor to initialize account details
+    BankAccount(string name, string accNum, double initialBalance) {
+        accountHolder = name;
+        accountNumber = accNum;
         balance = initialBalance;
     }
 
-    // Deposit method
+    // Deposit function to add money to account
     void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
-            std::cout << "Deposited: $" << amount << std::endl;
+            cout << "Deposited: " << amount << "\n";
         } else {
-            std::cout << "Invalid deposit amount!" << std::endl;
+            cout << "Error: Deposit amount must be positive.\n";
         }
     }
 
-    // Withdraw method
+    // Withdraw function to subtract money from account
     void withdraw(double amount) {
         if (amount <= 0) {
-            std::cout << "Invalid withdrawal amount!" << std::endl;
+            cout << "Error: Withdrawal amount must be positive.\n";
         } else if (amount > balance) {
-            std::cout << "Insufficient funds. Withdrawal failed." << std::endl;
+            cout << "Error: Insufficient funds.\n";
         } else {
             balance -= amount;
-            std::cout << "Withdrew: $" << amount << std::endl;
+            cout << "Withdrew: " << amount << "\n";
         }
     }
 
-    // Check balance
+    // Function to display account balance
     void checkBalance() const {
-        std::cout << "Current balance: $" << balance << std::endl;
+        cout << "Account Balance: " << balance << "\n";
     }
 
-    // Show account info
-    void displayAccountInfo() const {
-        std::cout << "Account Holder: " << accountHolderName << std::endl;
-        std::cout << "Account Number: " << accountNumber << std::endl;
-        checkBalance();
+    // Function to display account details
+    void displayAccountDetails() const {
+        cout << "\nAccount Holder: " << accountHolder
+             << "\nAccount Number: " << accountNumber
+             << "\nBalance: " << balance << "\n";
     }
 };
 
-// Example usage
 int main() {
-    BankAccount acc("John Doe", "1234567890", 1000.0);
+    // Create an account for a customer
+    string name, accountNum;
+    double initialBalance;
 
-    acc.displayAccountInfo();
-    acc.deposit(500);
-    acc.withdraw(200);
-    acc.withdraw(1500);  // This should show an error
-    acc.checkBalance();
+    cout << "Enter Account Holder's Name: ";
+    getline(cin, name);
 
-    std::cout<<"prince 24ce105";
+    cout << "Enter Account Number: ";
+    getline(cin, accountNum);
 
+    cout << "Enter Initial Balance: ";
+    cin >> initialBalance;
+
+    BankAccount account(name, accountNum, initialBalance);
+
+    int choice;
+    do {
+        // Menu options
+        cout << "\nBanking System Menu:\n";
+        cout << "1. Deposit\n2. Withdraw\n3. Check Balance\n4. View Account Details\n5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            double depositAmount;
+            cout << "Enter amount to deposit: ";
+            cin >> depositAmount;
+            account.deposit(depositAmount);
+        } else if (choice == 2) {
+            double withdrawAmount;
+            cout << "Enter amount to withdraw: ";
+            cin >> withdrawAmount;
+            account.withdraw(withdrawAmount);
+        } else if (choice == 3) {
+            account.checkBalance();
+        } else if (choice == 4) {
+            account.displayAccountDetails();
+        } else if (choice != 5) {
+            cout << "Invalid choice. Please try again.\n";
+        }
+
+    } while (choice != 5);
+
+    cout << "\nprince 24ce105\n";
     return 0;
 }
